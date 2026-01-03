@@ -19,15 +19,6 @@
 
 **GymVibe** to nowoczesna aplikacja mobilna stworzona w Flutter, która pomaga użytkownikom planować, śledzić i analizować swoje treningi. Aplikacja oferuje kompleksowe rozwiązanie do zarządzania treningami siłowymi, cardio oraz innymi formami aktywności fizycznej.
 
-### ✨ Główne zalety
-
-- 🚀 **Działa bez logowania** - rozpocznij od razu, bez zbędnych formalności
-- 💾 **Lokalne przechowywanie danych** - wszystkie dane są bezpiecznie przechowywane na urządzeniu
-- 🌍 **Dwujęzyczność** - pełne wsparcie dla języka polskiego i angielskiego
-- 🎨 **Material 3 Design** - nowoczesny, intuicyjny interfejs użytkownika
-- 🌙 **Dark Mode** - przyjazny dla oczu tryb ciemny
-- 📊 **Szczegółowe statystyki** - śledź swój progres w czasie
-
 ---
 
 ## 🎯 Features
