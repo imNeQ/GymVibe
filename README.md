@@ -88,17 +88,17 @@
 
 <div align="center">
 
-| Dashboard | Plan | Statistics |
-|:---------:|:----:|:----------:|
-| ![Dashboard](https://github.com/imNeQ/GymVibe/raw/main/assets/images/1.PNG) | ![Plan](https://github.com/imNeQ/GymVibe/raw/main/assets/images/3.PNG) | ![Statistics](https://github.com/imNeQ/GymVibe/raw/main/assets/images/4.PNG) |
+| Dashboard | Workouts | Plan |
+|:---------:|:--------:|:----:|
+| ![Dashboard](https://github.com/imNeQ/GymVibe/raw/main/assets/images/1.PNG) | ![Workouts](https://github.com/imNeQ/GymVibe/raw/main/assets/images/8.PNG) | ![Plan](https://github.com/imNeQ/GymVibe/raw/main/assets/images/3.PNG) |
 
-| Workouts | Profile | Settings |
-|:--------:|:-------:|:--------:|
-| ![Workouts](https://github.com/imNeQ/GymVibe/raw/main/assets/images/7.PNG) | ![Profile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/8.PNG) | ![Settings](https://github.com/imNeQ/GymVibe/raw/main/assets/images/6.PNG) |
+| Statistics | Profile | Settings |
+|:----------:|:-------:|:--------:|
+| ![Statistics](https://github.com/imNeQ/GymVibe/raw/main/assets/images/4.PNG) | ![Profile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/9.PNG) | ![Settings](https://github.com/imNeQ/GymVibe/raw/main/assets/images/6.PNG) |
 
-| Add Workout | Workout History | Exercise Progress |
-|:-----------:|:---------------:|:-----------------:|
-| ![Add Workout](https://github.com/imNeQ/GymVibe/raw/main/assets/images/9.PNG) | ![Workout History](https://github.com/imNeQ/GymVibe/raw/main/assets/images/10.PNG) | ![Exercise Progress](https://github.com/imNeQ/GymVibe/raw/main/assets/images/5.PNG) |
+| Add Workout | Workout History | Exercise Search |
+|:-----------:|:---------------:|:---------------:|
+| ![Add Workout](https://github.com/imNeQ/GymVibe/raw/main/assets/images/7.PNG) | ![Workout History](https://github.com/imNeQ/GymVibe/raw/main/assets/images/10.PNG) | ![Exercise Search](https://github.com/imNeQ/GymVibe/raw/main/assets/images/5.PNG) |
 
 | Timer |
 |:-----:|
