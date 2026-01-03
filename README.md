@@ -92,9 +92,9 @@
 |:---------:|:--------:|:----:|
 | ![Dashboard](https://github.com/imNeQ/GymVibe/raw/main/assets/images/1.PNG) | ![Workouts](https://github.com/imNeQ/GymVibe/raw/main/assets/images/2.PNG) | ![Plan](https://github.com/imNeQ/GymVibe/raw/main/assets/images/3.PNG) |
 
-| Statistics | Profile | EditProfile |
+| Statistics | Profile | Edit Profile |
 |:----------:|:-------:|:--------:|
-| ![Statistics](https://github.com/imNeQ/GymVibe/raw/main/assets/images/4.PNG) | ![Profile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/5.PNG) | ![EditProfile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/6.PNG) |
+| ![Statistics](https://github.com/imNeQ/GymVibe/raw/main/assets/images/4.PNG) | ![Profile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/5.PNG) | ![Edit Profile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/6.PNG) |
 
 | Settings | Workout History | Exercise Search |
 |:-----------:|:---------------:|:---------------:|
