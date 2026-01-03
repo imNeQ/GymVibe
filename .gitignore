@@ -1,0 +1,37 @@
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+*.iml
+*.ipr
+*.iws
+.idea/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+app.*.symbols
+app.*.map.json
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Dokumentacja (tylko dla lokalnego użytku)
+ANALIZA_FUNKCJONALNOSCI.md
+DODATKOWE_FUNKCJONALNOSCI.md
+Dokumentacja techniczna.md
+Funkcjonalnosci.md
+Raport.md
+TESTING_GUIDE.md
+FUNCTIONALITY_STATUS.md
