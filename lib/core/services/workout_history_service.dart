@@ -93,16 +93,13 @@ class WorkoutHistoryService {
   // LOCAL TEST DATA - tylko dla lokalnego testowania screenów, nie commitować
   static List<CompletedWorkout> _getTestData() {
     final now = DateTime.now();
-    // Oblicz początek tygodnia (poniedziałek)
-    final daysFromMonday = now.weekday - 1;
-    final startOfWeek = DateTime(now.year, now.month, now.day)
-        .subtract(Duration(days: daysFromMonday));
+    final today = DateTime(now.year, now.month, now.day);
     
     return [
-      // Treningi z tego tygodnia (zaczynając od poniedziałku)
+      // Treningi z ostatnich 7 dni (dla wykresu) - rozłożone równomiernie
       CompletedWorkout(
         workoutId: '1',
-        completedAt: startOfWeek.add(const Duration(days: 0, hours: 18)), // Poniedziałek
+        completedAt: today.subtract(const Duration(days: 6)).add(const Duration(hours: 18)), // 6 dni temu
         activityType: ActivityType.gym,
         durationMinutes: 35,
         strengthExercises: [
@@ -126,7 +123,7 @@ class WorkoutHistoryService {
       ),
       CompletedWorkout(
         customName: 'Bieg poranny',
-        completedAt: startOfWeek.add(const Duration(days: 1, hours: 7)), // Wtorek
+        completedAt: today.subtract(const Duration(days: 5)).add(const Duration(hours: 7)), // 5 dni temu
         activityType: ActivityType.running,
         durationSeconds: 1500, // 25 minut
         distance: 4.8,
@@ -134,7 +131,7 @@ class WorkoutHistoryService {
       ),
       CompletedWorkout(
         workoutId: '2',
-        completedAt: startOfWeek.add(const Duration(days: 2, hours: 14)), // Środa
+        completedAt: today.subtract(const Duration(days: 4)).add(const Duration(hours: 14)), // 4 dni temu
         activityType: ActivityType.gym,
         durationMinutes: 45,
         strengthExercises: [
@@ -158,19 +155,19 @@ class WorkoutHistoryService {
       ),
       CompletedWorkout(
         workoutId: '4',
-        completedAt: startOfWeek.add(const Duration(days: 3, hours: 10)), // Czwartek
+        completedAt: today.subtract(const Duration(days: 3)).add(const Duration(hours: 10)), // 3 dni temu
         activityType: ActivityType.gym,
         durationMinutes: 30,
       ),
       CompletedWorkout(
         workoutId: '5',
-        completedAt: startOfWeek.add(const Duration(days: 4, hours: 16)), // Piątek
+        completedAt: today.subtract(const Duration(days: 2)).add(const Duration(hours: 16)), // 2 dni temu
         activityType: ActivityType.gym,
         durationMinutes: 25,
       ),
       CompletedWorkout(
         customName: 'Bieg w parku',
-        completedAt: startOfWeek.add(const Duration(days: 5, hours: 8)), // Sobota
+        completedAt: today.subtract(const Duration(days: 1)).add(const Duration(hours: 8)), // Wczoraj
         activityType: ActivityType.running,
         durationSeconds: 1800, // 30 minut
         distance: 5.2,
@@ -178,7 +175,7 @@ class WorkoutHistoryService {
       ),
       CompletedWorkout(
         workoutId: '1',
-        completedAt: startOfWeek.add(const Duration(days: 6, hours: 10)), // Niedziela (dzisiaj jeśli dzisiaj jest niedziela)
+        completedAt: today.add(const Duration(hours: 10)), // Dzisiaj
         activityType: ActivityType.gym,
         durationMinutes: 20,
       ),
