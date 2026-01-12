@@ -77,6 +77,7 @@ class MainNavigationState extends State<MainNavigation> {
       ),
       floatingActionButton: _currentIndex == 0
           ? FloatingActionButton.extended(
+              heroTag: 'main_nav_fab',
               onPressed: () async {
                 await Navigator.push(
                   context,

@@ -41,6 +41,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'workout_list_fab',
         onPressed: () async {
           final result = await Navigator.push(
             context,
