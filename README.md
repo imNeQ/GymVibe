@@ -90,9 +90,9 @@
 |:-----------:|:---------------:|:---------------:|
 | ![Ustawienia](https://github.com/imNeQ/GymVibe/raw/main/assets/images/7.PNG) | ![Historia treningów](https://github.com/imNeQ/GymVibe/raw/main/assets/images/8.PNG) | ![Wyszukiwarka ćwiczeń](https://github.com/imNeQ/GymVibe/raw/main/assets/images/9.PNG) |
 
-| Dodaj trening |
-|:------------:|
-| ![Dodaj trening](https://github.com/imNeQ/GymVibe/raw/main/assets/images/10.PNG) |
+| Dodaj trening | Edytuj Plan | Progres ćwiczenia |
+|:------------:|:-----------:|:----------------:|
+| ![Dodaj trening](https://github.com/imNeQ/GymVibe/raw/main/assets/images/10.PNG) | ![Edytuj Plan](https://github.com/imNeQ/GymVibe/raw/main/assets/images/11.PNG) | ![Progres ćwiczenia](https://github.com/imNeQ/GymVibe/raw/main/assets/images/12.PNG) |
 
 </div>
 
