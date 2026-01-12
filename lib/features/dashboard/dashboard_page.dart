@@ -964,50 +964,63 @@ class _RecentWorkoutsSection extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Row(
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 4,
                       children: [
-                        Icon(
-                          Icons.calendar_today,
-                          size: 14,
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          dateText,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                          ),
-                        ),
-                        if (duration > 0) ...[
-                          const SizedBox(width: 12),
-                          Icon(
-                            Icons.timer,
-                            size: 14,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '$duration min',
-                            style: theme.textTheme.bodySmall?.copyWith(
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.calendar_today,
+                              size: 14,
                               color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                             ),
-                          ),
-                        ],
-                        if (completed.distance != null) ...[
-                          const SizedBox(width: 12),
-                          Icon(
-                            Icons.straighten,
-                            size: 14,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${completed.distance!.toStringAsFixed(1)} km',
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                            const SizedBox(width: 4),
+                            Text(
+                              dateText,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                              ),
                             ),
+                          ],
+                        ),
+                        if (duration > 0)
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.timer,
+                                size: 14,
+                                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '$duration min',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        if (completed.distance != null)
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.straighten,
+                                size: 14,
+                                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${completed.distance!.toStringAsFixed(1)} km',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ],
