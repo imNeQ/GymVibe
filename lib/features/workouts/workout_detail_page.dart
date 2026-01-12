@@ -4,12 +4,9 @@ import '../../core/services/workout_history_service.dart';
 import '../../core/services/custom_workout_service.dart';
 import '../../core/models/exercise.dart';
 import '../../core/models/workout.dart';
-import '../../core/utils/translations.dart';
 import '../../core/localization/app_localizations.dart';
 import 'workout_timer_page.dart';
 
-/// Workout detail page - shows complete information about a specific workout.
-/// Part of the GymVibe app's workout management feature.
 class WorkoutDetailPage extends StatefulWidget {
   final String workoutId;
 
@@ -39,7 +36,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
-            appBar: AppBar(title: Text(AppLocalizations.of(context)?.workoutDetail ?? 'Szczegóły treningu')),
+            appBar: AppBar(title: Text(AppLocalizations.of(context)?.workoutDetail ?? 'Workout Details')),
             body: const Center(child: CircularProgressIndicator()),
           );
         }
@@ -47,8 +44,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
         final workout = snapshot.data;
         if (workout == null) {
           return Scaffold(
-            appBar: AppBar(title: Text(AppLocalizations.of(context)?.workoutNotFound ?? 'Trening nie znaleziony')),
-            body: Center(child: Text(AppLocalizations.of(context)?.workoutNotFound ?? 'Trening nie został znaleziony')),
+            appBar: AppBar(title: Text(AppLocalizations.of(context)?.workoutNotFound ?? 'Workout Not Found')),
+            body: Center(child: Text(AppLocalizations.of(context)?.workoutNotFound ?? 'Workout not found')),
           );
         }
 
@@ -65,7 +62,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                 IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () => _showDeleteDialog(context, workout),
-                  tooltip: AppLocalizations.of(context)?.deleteWorkout ?? 'Usuń trening',
+                  tooltip: AppLocalizations.of(context)?.deleteWorkout ?? 'Delete Workout',
                 ),
             ],
           ),
@@ -78,13 +75,13 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                   _buildWorkoutInfoCard(workout, difficultyColor, theme),
                   const SizedBox(height: 24),
                   Text(
-                    AppLocalizations.of(context)?.exercises ?? 'Ćwiczenia',
+                    AppLocalizations.of(context)?.exercises ?? 'Exercises',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...workout.exercises.map((exercise) => _buildExerciseCard(exercise, theme)),
+                  ...workout.exercises.map((exercise) => _buildExerciseCard(context, exercise, theme)),
                   const SizedBox(height: 24),
                   if (!_isCompleted) _buildStartWorkoutButton(theme, workout),
                   if (!_isCompleted) const SizedBox(height: 8),
@@ -110,19 +107,29 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
               spacing: 8,
               runSpacing: 8,
               children: [
-                _buildDifficultyChip(workout.difficulty, difficultyColor),
+                _buildDifficultyChip(context, workout.difficulty, difficultyColor),
                 _buildDurationChip(workout.estimatedDurationMinutes, theme),
               ],
             ),
-            if (workout.description != null) ...[
-              const SizedBox(height: 12),
-              Text(
-                workout.description!,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                ),
-              ),
-            ],
+            Builder(
+              builder: (context) {
+                final l10n = AppLocalizations.of(context);
+                final description = l10n?.getWorkoutDescription(workout.id) ?? workout.description;
+                if (description == null) return const SizedBox.shrink();
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 12),
+                    Text(
+                      description,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -130,7 +137,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   }
 
   /// Build exercise card.
-  Widget _buildExerciseCard(Exercise exercise, ThemeData theme) {
+  Widget _buildExerciseCard(BuildContext context, Exercise exercise, ThemeData theme) {
+    final l10n = AppLocalizations.of(context);
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -164,7 +172,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${exercise.sets} serie × ${exercise.reps} powtórzeń',
+                    '${exercise.sets} ${l10n?.sets ?? 'sets'} × ${exercise.reps} ${l10n?.reps ?? 'reps'}',
                     style: theme.textTheme.bodyMedium,
                   ),
                   if (exercise.restSeconds != null) ...[
@@ -178,7 +186,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'Odpoczynek: ${exercise.restSeconds}s',
+                          '${l10n?.rest ?? 'Rest'}: ${exercise.restSeconds}s',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                           ),
@@ -220,7 +228,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
           });
         },
         icon: const Icon(Icons.play_arrow),
-        label: Text(l10n?.startWorkout ?? 'Rozpocznij trening'),
+        label: Text(l10n?.startWorkout ?? 'Start Workout'),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
@@ -243,14 +251,14 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(AppLocalizations.of(context)?.workoutMarkedAsCompleted ?? 'Trening oznaczony jako ukończony!'),
+                      content: Text(AppLocalizations.of(context)?.workoutMarkedAsCompleted ?? 'Workout marked as completed!'),
                       duration: Duration(seconds: 2),
                     ),
                   );
                 }
               },
         icon: Icon(_isCompleted ? Icons.check_circle : Icons.check),
-        label: Text(_isCompleted ? (AppLocalizations.of(context)?.completed ?? 'Ukończony') : (AppLocalizations.of(context)?.markAsDone ?? 'Oznacz jako ukończony')),
+        label: Text(_isCompleted ? (AppLocalizations.of(context)?.completed ?? 'Completed') : (AppLocalizations.of(context)?.markAsDone ?? 'Mark as Done')),
         style: FilledButton.styleFrom(
           backgroundColor: _isCompleted
               ? Colors.green
@@ -275,9 +283,25 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   }
 
   /// Build difficulty chip.
-  Widget _buildDifficultyChip(String difficulty, Color color) {
+  Widget _buildDifficultyChip(BuildContext context, String difficulty, Color color) {
+    final l10n = AppLocalizations.of(context);
+    String difficultyText;
+    switch (difficulty.toLowerCase()) {
+      case 'beginner':
+        difficultyText = l10n?.beginner ?? 'Beginner';
+        break;
+      case 'intermediate':
+        difficultyText = l10n?.intermediate ?? 'Intermediate';
+        break;
+      case 'advanced':
+        difficultyText = l10n?.advanced ?? 'Advanced';
+        break;
+      default:
+        difficultyText = difficulty;
+    }
+    
     return Chip(
-      label: Text(Translations.translateDifficulty(difficulty)),
+      label: Text(difficultyText),
       backgroundColor: color.withValues(alpha: 0.1),
       labelStyle: TextStyle(
         color: color,
@@ -317,12 +341,12 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.deleteWorkout ?? 'Usuń trening'),
+        title: Text(l10n?.deleteWorkout ?? 'Delete Workout'),
         content: Text(l10n?.deleteConfirmation ?? 'Czy na pewno chcesz usunąć ten trening? Tej operacji nie można cofnąć.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n?.cancel ?? 'Anuluj'),
+            child: Text(l10n?.cancel ?? 'Cancel'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
@@ -352,7 +376,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
         if (!mounted) return;
         messenger.showSnackBar(
           SnackBar(
-            content: Text(l10n?.workoutDeleted ?? 'Trening został usunięty'),
+            content: Text(l10n?.workoutDeleted ?? 'Workout has been deleted'),
             duration: const Duration(seconds: 2),
           ),
         );

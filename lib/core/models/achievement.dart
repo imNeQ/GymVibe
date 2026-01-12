@@ -1,4 +1,3 @@
-/// Model representing a user achievement/badge.
 class Achievement {
   final String id;
   final String nameKey; // Localization key for name

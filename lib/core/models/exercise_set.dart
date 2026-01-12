@@ -1,5 +1,3 @@
-/// Model representing a single set of an exercise with weight and reps.
-/// Part of the GymVibe app's core data models.
 class ExerciseSet {
   final double? weight; // Weight in kg (optional)
   final int reps; // Number of repetitions

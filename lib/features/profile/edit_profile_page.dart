@@ -3,7 +3,6 @@ import '../../core/models/user_profile.dart';
 import '../../core/services/user_profile_service.dart';
 import '../../core/localization/app_localizations.dart';
 
-/// Page for editing user profile.
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 

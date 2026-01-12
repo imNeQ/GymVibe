@@ -4,12 +4,11 @@
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-blue)
+![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Windows%20%7C%20Web-blue)
 
 **Aplikacja mobilna do planowania i śledzenia treningów domowych oraz siłowniowych**
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Screenshots](#-screenshots) • [Tech Stack](#-tech-stack)
+[Funkcje](#-funkcje) • [Instalacja](#-instalacja) • [Użycie](#-użycie) • [Zrzuty ekranu](#-zrzuty-ekranu) • [Stack technologiczny](#-stack-technologiczny)
 
 </div>
 
@@ -17,11 +16,11 @@
 
 ## 📖 O projekcie
 
-**GymVibe** to nowoczesna aplikacja mobilna stworzona w Flutter, która pomaga użytkownikom planować, śledzić i analizować swoje treningi. Aplikacja oferuje kompleksowe rozwiązanie do zarządzania treningami siłowymi, cardio oraz innymi formami aktywności fizycznej.
+**GymVibe** to aplikacja mobilna stworzona w Flutter do planowania i śledzenia treningów siłowych oraz cardio.
 
 ---
 
-## 🎯 Features
+## 🎯 Funkcje
 
 ### 📊 Dashboard
 - **Przegląd tygodniowy** - szybki podgląd liczby treningów w bieżącym tygodniu
@@ -79,34 +78,34 @@
 
 <div align="center">
 
-| Dashboard | Workouts | Plan |
+| Dashboard | Treningi | Plan |
 |:---------:|:--------:|:----:|
-| ![Dashboard](https://github.com/imNeQ/GymVibe/raw/main/assets/images/1.PNG) | ![Workouts](https://github.com/imNeQ/GymVibe/raw/main/assets/images/2.PNG) | ![Plan](https://github.com/imNeQ/GymVibe/raw/main/assets/images/3.PNG) |
+| ![Dashboard](https://github.com/imNeQ/GymVibe/raw/main/assets/images/1.PNG) | ![Treningi](https://github.com/imNeQ/GymVibe/raw/main/assets/images/2.PNG) | ![Plan](https://github.com/imNeQ/GymVibe/raw/main/assets/images/3.PNG) |
 
-| Statistics | Profile | Edit Profile |
+| Statystyki | Profil | Edytuj Profil |
 |:----------:|:-------:|:--------:|
-| ![Statistics](https://github.com/imNeQ/GymVibe/raw/main/assets/images/4.PNG) | ![Profile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/5.PNG) | ![Edit Profile](https://github.com/imNeQ/GymVibe/raw/main/assets/images/6.PNG) |
+| ![Statystyki](https://github.com/imNeQ/GymVibe/raw/main/assets/images/4.PNG) | ![Profil](https://github.com/imNeQ/GymVibe/raw/main/assets/images/5.PNG) | ![Edytuj Profil](https://github.com/imNeQ/GymVibe/raw/main/assets/images/6.PNG) |
 
-| Settings | Workout History | Exercise Search |
+| Ustawienia | Historia treningów | Wyszukiwarka ćwiczeń |
 |:-----------:|:---------------:|:---------------:|
-| ![Settings](https://github.com/imNeQ/GymVibe/raw/main/assets/images/7.PNG) | ![Workout History](https://github.com/imNeQ/GymVibe/raw/main/assets/images/8.PNG) | ![Exercise Search](https://github.com/imNeQ/GymVibe/raw/main/assets/images/9.PNG) |
+| ![Ustawienia](https://github.com/imNeQ/GymVibe/raw/main/assets/images/7.PNG) | ![Historia treningów](https://github.com/imNeQ/GymVibe/raw/main/assets/images/8.PNG) | ![Wyszukiwarka ćwiczeń](https://github.com/imNeQ/GymVibe/raw/main/assets/images/9.PNG) |
 
-| Add Workout |
+| Dodaj trening |
 |:------------:|
-| ![Add Workout](https://github.com/imNeQ/GymVibe/raw/main/assets/images/10.PNG) |
+| ![Dodaj trening](https://github.com/imNeQ/GymVibe/raw/main/assets/images/10.PNG) |
 
 </div>
 
 ---
 
-## 🚀 Installation
+## 🚀 Instalacja
 
 ### Wymagania
 
 - **Flutter SDK** >= 3.0.0
 - **Dart** >= 3.0.0
 - **Android Studio / VS Code** z rozszerzeniem Flutter
-- **Emulator/Urządzenie** (Android/iOS) lub przeglądarka (web)
+- **Emulator/Urządzenie** (Android/iOS/Windows) lub przeglądarka (web)
 
 ### Kroki instalacji
 
@@ -128,7 +127,7 @@
 
 ---
 
-## 💻 Usage
+## 💻 Użycie
 
 ### Uruchomienie aplikacji
 
@@ -139,6 +138,11 @@ flutter devices
 
 # Uruchom aplikację
 flutter run
+```
+
+#### Na Windows:
+```bash
+flutter run -d windows
 ```
 
 #### Na web (przeglądarka):
@@ -176,26 +180,32 @@ flutter build appbundle
 # iOS (wymaga macOS)
 flutter build ios
 
+# Windows
+flutter build windows
+
 # Web
 flutter build web
 ```
 
 ---
 
-## 🏗️ Project Structure
+## 🏗️ Struktura projektu
 
 ```
 lib/
-├── main.dart                    # Punkt wejścia aplikacji
+├── main.dart                    
 ├── core/
-│   ├── models/                  # Modele danych
+│   ├── models/                  
 │   │   ├── workout.dart
 │   │   ├── exercise.dart
+│   │   ├── exercise_set.dart
+│   │   ├── strength_exercise.dart
+│   │   ├── exercise_info.dart
 │   │   ├── workout_plan.dart
 │   │   ├── completed_workout.dart
 │   │   ├── user_profile.dart
 │   │   └── achievement.dart
-│   ├── services/                # Serwisy biznesowe
+│   ├── services/                
 │   │   ├── mock_data.dart
 │   │   ├── workout_history_service.dart
 │   │   ├── custom_workout_service.dart
@@ -205,18 +215,16 @@ lib/
 │   │   ├── exercise_search_service.dart
 │   │   └── settings_service.dart
 │   ├── theme/
-│   │   └── app_theme.dart       # Konfiguracja motywu Material 3
+│   │   └── app_theme.dart       
 │   ├── navigation/
-│   │   └── main_navigation.dart # Główna nawigacja z bottom bar
+│   │   └── main_navigation.dart 
 │   ├── localization/
-│   │   └── app_localizations.dart # Lokalizacja PL/EN
-│   ├── routes.dart              # Named routes
-│   └── utils/
-│       └── translations.dart    # Pomocnicze funkcje tłumaczeń
+│   │   └── app_localizations.dart 
+│   └── routes.dart             
 ├── features/
-│   ├── dashboard/               # Ekran główny
+│   ├── dashboard/               
 │   │   └── dashboard_page.dart
-│   ├── workouts/                # Zarządzanie treningami
+│   ├── workouts/               
 │   │   ├── workout_list_page.dart
 │   │   ├── workout_detail_page.dart
 │   │   ├── add_workout_page.dart
@@ -225,25 +233,25 @@ lib/
 │   │   ├── workout_history_list_page.dart
 │   │   ├── workout_history_detail_page.dart
 │   │   └── workout_timer_page.dart
-│   ├── plans/                   # Plan tygodniowy
+│   ├── plans/                   
 │   │   ├── plan_page.dart
 │   │   └── edit_plan_page.dart
-│   ├── statistics/              # Statystyki
+│   ├── statistics/             
 │   │   ├── statistics_page.dart
 │   │   └── exercise_progress_page.dart
-│   ├── profile/                 # Profil użytkownika
+│   ├── profile/                 
 │   │   ├── profile_page.dart
 │   │   ├── edit_profile_page.dart
 │   │   └── exercise_search_page.dart
-│   └── settings/                # Ustawienia
+│   └── settings/                
 │       └── settings_page.dart
 └── widgets/
-    └── custom_button.dart       # Reużywalne komponenty
+    └── custom_button.dart       
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Stack technologiczny
 
 - **Framework:** [Flutter](https://flutter.dev/) 3.0+
 - **Język:** [Dart](https://dart.dev/) 3.0+
@@ -266,7 +274,7 @@ dependencies:
 
 ---
 
-## 🧪 Testing
+## 🧪 Testowanie
 
 ```bash
 # Uruchom wszystkie testy
@@ -294,20 +302,19 @@ flutter analyze
 
 ```
 test/
-├── integration/          # Testy integracyjne
 ├── models/              # Testy modeli
-├── services/            # Testy serwisów
-└── widgets/             # Testy widgetów
+└── services/            # Testy serwisów
 ```
 
 ---
 
-## 📄 License
+## 👥 Autorzy
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Projekt realizowany w ramach przedmiotu **Zwinne zarządzanie projektami**.
 
----
-
-## 👥 Authors
-
-- **Development Team** - *Initial work*
+- Łukasz Augusewicz
+- Tomasz Czarnota
+- Szymon Fiałkowski
+- Gabriela Sumera
+- Grzegorz Stanik
+- Michał Nowak

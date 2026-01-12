@@ -3,11 +3,7 @@ import '../models/workout.dart';
 import '../models/workout_plan.dart';
 import 'custom_workout_service.dart';
 
-/// Mock data service providing sample workouts and plans.
-/// Combines predefined mock workouts with user-created custom workouts.
 class MockDataService {
-  /// Get all available workouts (mock + custom).
-  /// Original workout plans designed for GymVibe app combined with user-created workouts.
   static Future<List<Workout>> getWorkouts() async {
     final customWorkouts = await CustomWorkoutService.getWorkouts();
     final mockWorkouts = _getMockWorkouts();
@@ -22,7 +18,7 @@ class MockDataService {
         name: 'Full Body Beginner',
         difficulty: 'Beginner',
         estimatedDurationMinutes: 30,
-        description: 'Kompleksowy trening całego ciała idealny na początek Twojej przygody z fitness',
+        description: 'Comprehensive full-body workout perfect for starting your fitness journey',
         exercises: [
           const Exercise(name: 'Bodyweight Squats', sets: 3, reps: 12, restSeconds: 60),
           const Exercise(name: 'Push-ups', sets: 3, reps: 8, restSeconds: 60),
@@ -36,7 +32,7 @@ class MockDataService {
         name: 'Upper Body Strength',
         difficulty: 'Intermediate',
         estimatedDurationMinutes: 45,
-        description: 'Skupia się na klatce piersiowej, barkach, plecach i ramionach dla zrównoważonego rozwoju górnej części ciała',
+        description: 'Focuses on chest, shoulders, back, and arms for balanced upper body development',
         exercises: [
           const Exercise(name: 'Wide Push-ups', sets: 4, reps: 12, restSeconds: 90),
           const Exercise(name: 'Diamond Push-ups', sets: 3, reps: 10, restSeconds: 90),
@@ -50,7 +46,7 @@ class MockDataService {
         name: 'Leg Day Focus',
         difficulty: 'Intermediate',
         estimatedDurationMinutes: 40,
-        description: 'Kompleksowy trening dolnej części ciała skupiający się na wszystkich głównych mięśniach nóg',
+        description: 'Comprehensive lower body workout focusing on all major leg muscles',
         exercises: [
           const Exercise(name: 'Squats', sets: 4, reps: 15, restSeconds: 90),
           const Exercise(name: 'Reverse Lunges', sets: 3, reps: 12, restSeconds: 90),
@@ -64,7 +60,7 @@ class MockDataService {
         name: 'HIIT Cardio Blast',
         difficulty: 'Advanced',
         estimatedDurationMinutes: 25,
-        description: 'Wysokointensywne interwały zwiększające wydolność sercowo-naczyniową i spalające kalorie',
+        description: 'High-intensity intervals boosting cardiovascular endurance and burning calories',
         exercises: [
           const Exercise(name: 'Burpees', sets: 4, reps: 8, restSeconds: 30),
           const Exercise(name: 'Mountain Climbers', sets: 4, reps: 20, restSeconds: 30),
@@ -78,7 +74,7 @@ class MockDataService {
         name: 'Core Strength Builder',
         difficulty: 'Beginner',
         estimatedDurationMinutes: 20,
-        description: 'Rozwijaj stabilność i siłę core dzięki skupionym ćwiczeniom na mięśnie brzucha',
+        description: 'Build core stability and strength with focused abdominal muscle exercises',
         exercises: [
           const Exercise(name: 'Plank Hold', sets: 3, reps: 30, restSeconds: 60),
           const Exercise(name: 'Dead Bug', sets: 3, reps: 12, restSeconds: 45),
@@ -93,7 +89,7 @@ class MockDataService {
         name: 'Push Day',
         difficulty: 'Intermediate',
         estimatedDurationMinutes: 50,
-        description: 'Trening skupiający się na klatce piersiowej, barkach i tricepsach. Idealny dla split push/pull/legs',
+        description: 'Workout focusing on chest, shoulders, and triceps. Perfect for push/pull/legs split',
         exercises: [
           const Exercise(name: 'Bench Press', sets: 4, reps: 8, restSeconds: 120),
           const Exercise(name: 'Overhead Press', sets: 3, reps: 8, restSeconds: 90),
@@ -238,13 +234,5 @@ class MockDataService {
     );
   }
 
-  /// Get mock statistics.
-  static Map<String, int> getStatistics() {
-    return {
-      'workoutsThisWeek': 4,
-      'workoutsThisMonth': 15,
-      'totalWorkouts': 42,
-    };
-  }
 }
 

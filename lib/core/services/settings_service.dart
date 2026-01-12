@@ -2,27 +2,22 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Enum for distance units.
 enum DistanceUnit {
   kilometers,
   miles,
 }
 
-/// Enum for app language.
 enum AppLanguage {
   polish,
   english,
 }
 
-/// Enum for theme mode.
 enum AppThemeMode {
   light,
   dark,
   system,
 }
 
-/// Service for managing app settings.
-/// Stores settings in local storage using SharedPreferences.
 class SettingsService {
   static const String _keyDistanceUnit = 'distance_unit';
   static const String _keyLanguage = 'app_language';
@@ -191,11 +186,11 @@ class SettingsService {
   static String getThemeModeDisplayName(AppThemeMode mode) {
     switch (mode) {
       case AppThemeMode.light:
-        return 'Jasny';
+        return 'Light';
       case AppThemeMode.dark:
-        return 'Ciemny';
+        return 'Dark';
       case AppThemeMode.system:
-        return 'Systemowy';
+        return 'System';
     }
   }
 

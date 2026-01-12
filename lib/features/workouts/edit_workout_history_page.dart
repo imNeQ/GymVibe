@@ -5,7 +5,6 @@ import '../../core/models/exercise_set.dart';
 import '../../core/services/workout_history_service.dart';
 import '../../core/localization/app_localizations.dart';
 
-/// Page for editing an existing workout in history.
 class EditWorkoutHistoryPage extends StatefulWidget {
   final CompletedWorkout completedWorkout;
 
@@ -77,7 +76,7 @@ class _EditWorkoutHistoryPageState extends State<EditWorkoutHistoryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.editWorkout ?? 'Edytuj trening'),
+        title: Text(AppLocalizations.of(context)?.editWorkout ?? 'Edit Workout'),
       ),
       body: Form(
         key: _formKey,
@@ -99,7 +98,7 @@ class _EditWorkoutHistoryPageState extends State<EditWorkoutHistoryPage> {
                 const SizedBox(height: 24),
                 _buildAdvancedFields(theme),
                 const SizedBox(height: 24),
-                _buildSaveButton(theme),
+                _buildSaveButton(context, theme),
               ],
             ),
           ),
@@ -205,22 +204,22 @@ class _EditWorkoutHistoryPageState extends State<EditWorkoutHistoryPage> {
               children: [
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: Text(l10n?.gym ?? 'Siłownia'),
+                  title: Text(l10n?.gym ?? 'Gym'),
                   value: ActivityType.gym,
                 ),
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: const Text('Bieganie'),
+                  title: Text(l10n?.running ?? 'Running'),
                   value: ActivityType.running,
                 ),
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: Text(l10n?.cycling ?? 'Rower'),
+                  title: Text(l10n?.cycling ?? 'Cycling'),
                   value: ActivityType.cycling,
                 ),
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: Text(l10n?.swimming ?? 'Pływanie'),
+                  title: Text(l10n?.swimming ?? 'Swimming'),
                   value: ActivityType.swimming,
                 ),
                 const Divider(height: 1),
@@ -633,13 +632,14 @@ class _EditWorkoutHistoryPageState extends State<EditWorkoutHistoryPage> {
   }
 
   /// Build save button.
-  Widget _buildSaveButton(ThemeData theme) {
+  Widget _buildSaveButton(BuildContext context, ThemeData theme) {
+    final l10n = AppLocalizations.of(context);
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: _saveWorkout,
         icon: const Icon(Icons.save),
-        label: const Text('Zapisz zmiany'),
+        label: Text(l10n?.saveChanges ?? 'Save Changes'),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
@@ -759,12 +759,12 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: Text(l10n?.addExercise ?? 'Dodaj ćwiczenie'),
+      title: Text(l10n?.addExercise ?? 'Add Exercise'),
       content: TextField(
         controller: _nameController,
         decoration: InputDecoration(
-          labelText: l10n?.exerciseName ?? 'Nazwa ćwiczenia',
-          hintText: l10n?.exerciseNameHint ?? 'np. Przysiad, Wyciskanie na ławce',
+          labelText: l10n?.exerciseName ?? 'Exercise Name',
+          hintText: l10n?.exerciseNameHint ?? 'e.g. Squat, Bench Press',
           border: OutlineInputBorder(),
         ),
         autofocus: true,
@@ -772,7 +772,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Anuluj'),
+          child: Text(l10n?.cancel ?? 'Cancel'),
         ),
         FilledButton(
           onPressed: () {
@@ -782,7 +782,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
               Navigator.pop(context);
             }
           },
-          child: const Text('Dodaj'),
+          child: Text(l10n?.add ?? 'Add'),
         ),
       ],
     );
@@ -860,7 +860,7 @@ class _AddSetDialogState extends State<_AddSetDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Anuluj'),
+          child: Text(l10n?.cancel ?? 'Cancel'),
         ),
         FilledButton(
           onPressed: () {
@@ -877,11 +877,11 @@ class _AddSetDialogState extends State<_AddSetDialog> {
               Navigator.pop(context);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n?.provideReps ?? 'Podaj liczbę powtórzeń')),
+                SnackBar(content: Text(l10n?.provideReps ?? 'Enter number of repetitions')),
               );
             }
           },
-          child: const Text('Dodaj'),
+          child: Text(l10n?.add ?? 'Add'),
         ),
       ],
     );

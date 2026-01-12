@@ -3,15 +3,12 @@ import '../../core/services/workout_history_service.dart';
 import '../../core/localization/app_localizations.dart';
 import 'exercise_progress_page.dart';
 
-/// Statistics page - displays workout progress and analytics.
-/// Part of the GymVibe app's analytics feature.
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
 
   @override
   State<StatisticsPage> createState() => _StatisticsPageState();
   
-  /// Create a key that can be used to access the state.
   static GlobalKey<State<StatisticsPage>> createKey() {
     return GlobalKey<State<StatisticsPage>>();
   }
@@ -154,7 +151,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     const SizedBox(height: 12),
                     _buildStatCard(
                       context,
-                      l10n?.allWorkoutsCount ?? 'Wszystkie treningi',
+                      l10n?.allWorkoutsCount ?? 'All Workouts',
                       _formatWorkoutCount(stats['totalWorkouts'] ?? 0, l10n),
                       Icons.fitness_center,
                       Colors.orange,

@@ -3,8 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/workout.dart';
 import '../models/exercise.dart';
 
-/// Service for managing custom user-created workouts.
-/// Stores custom workouts in local storage using SharedPreferences.
 class CustomWorkoutService {
   static const String _key = 'custom_workouts';
 
@@ -26,7 +24,6 @@ class CustomWorkoutService {
     }
   }
 
-  /// Get all custom workouts from local storage.
   static Future<List<Workout>> getWorkouts() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString(_key);

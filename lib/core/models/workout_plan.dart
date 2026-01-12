@@ -1,5 +1,3 @@
-/// Model representing a weekly workout plan.
-/// Part of the GymVibe app's core data models.
 class WorkoutPlan {
   // Day of week (1=Monday, 7=Sunday) -> List of workout IDs (empty list for rest day)
   final Map<int, List<String>> weeklySchedule;

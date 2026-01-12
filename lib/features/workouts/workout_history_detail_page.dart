@@ -6,7 +6,6 @@ import '../../core/services/workout_history_service.dart';
 import '../../core/localization/app_localizations.dart';
 import 'edit_workout_history_page.dart';
 
-/// Page showing details of a completed workout from history.
 class WorkoutHistoryDetailPage extends StatefulWidget {
   final CompletedWorkout completedWorkout;
 

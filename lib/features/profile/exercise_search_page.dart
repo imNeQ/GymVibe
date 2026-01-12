@@ -3,7 +3,6 @@ import '../../core/models/exercise_info.dart';
 import '../../core/services/exercise_search_service.dart';
 import '../../core/localization/app_localizations.dart';
 
-/// Page for searching and selecting exercises.
 class ExerciseSearchPage extends StatefulWidget {
   const ExerciseSearchPage({super.key});
 

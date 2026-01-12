@@ -6,8 +6,6 @@ import '../../core/models/completed_workout.dart';
 import '../../core/models/workout.dart';
 import '../../core/services/mock_data.dart';
 
-/// Page for workout timer.
-/// Allows users to track workout duration with pause/resume functionality.
 class WorkoutTimerPage extends StatefulWidget {
   final String? workoutId;
   final String? workoutName;
@@ -221,13 +219,13 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.workoutName ?? (l10n?.workoutTimer ?? 'Timer treningu')),
+        title: Text(widget.workoutName ?? (l10n?.workoutTimer ?? 'Workout Timer')),
         actions: [
           if (_isRunning || _elapsedSeconds > 0)
             IconButton(
               icon: const Icon(Icons.stop),
               onPressed: _finishWorkout,
-              tooltip: l10n?.finishWorkout ?? 'Zakończ trening',
+              tooltip: l10n?.finishWorkout ?? 'Finish Workout',
             ),
         ],
       ),
@@ -256,15 +254,25 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  if (workout.description != null) ...[
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      workout.description!,
-                                      style: theme.textTheme.bodyMedium?.copyWith(
-                                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                                      ),
-                                    ),
-                                  ],
+                                  Builder(
+                                    builder: (context) {
+                                      final l10n = AppLocalizations.of(context);
+                                      final description = l10n?.getWorkoutDescription(workout.id) ?? workout.description;
+                                      if (description == null) return const SizedBox.shrink();
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            description,
+                                            style: theme.textTheme.bodyMedium?.copyWith(
+                                              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
                                   const SizedBox(height: 12),
                                   Wrap(
                                     spacing: 8,
@@ -340,10 +348,10 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                 // Status text
                                 Text(
                                   _isRunning
-                                      ? (l10n?.timerRunning ?? 'Timer działa')
+                                      ? (l10n?.timerRunning ?? 'Timer Running')
                                       : _isPaused
-                                          ? (l10n?.timerPaused ?? 'Timer wstrzymany')
-                                          : (l10n?.timerStopped ?? 'Timer zatrzymany'),
+                                          ? (l10n?.timerPaused ?? 'Timer Paused')
+                                          : (l10n?.timerStopped ?? 'Timer Stopped'),
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                                   ),
@@ -374,8 +382,8 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                         icon: Icon(_isPaused ? Icons.play_arrow : Icons.pause),
                                         label: Text(
                                           _isPaused
-                                              ? (l10n?.resume ?? 'Wznów')
-                                              : (l10n?.pause ?? 'Pauza'),
+                                              ? (l10n?.resume ?? 'Resume')
+                                              : (l10n?.pause ?? 'Pause'),
                                         ),
                                         style: FilledButton.styleFrom(
                                           padding: const EdgeInsets.symmetric(
@@ -409,7 +417,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                     child: FilledButton.icon(
                                       onPressed: _finishWorkout,
                                       icon: const Icon(Icons.check),
-                                      label: Text(l10n?.finishWorkout ?? 'Zakończ trening'),
+                                      label: Text(l10n?.finishWorkout ?? 'Finish Workout'),
                                       style: FilledButton.styleFrom(
                                         backgroundColor: theme.colorScheme.tertiary,
                                         padding: const EdgeInsets.symmetric(
@@ -448,10 +456,10 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                     // Status text
                     Text(
                       _isRunning
-                          ? (l10n?.timerRunning ?? 'Timer działa')
+                          ? (l10n?.timerRunning ?? 'Timer Running')
                           : _isPaused
-                              ? (l10n?.timerPaused ?? 'Timer wstrzymany')
-                              : (l10n?.timerStopped ?? 'Timer zatrzymany'),
+                              ? (l10n?.timerPaused ?? 'Timer Paused')
+                              : (l10n?.timerStopped ?? 'Timer Stopped'),
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
@@ -482,8 +490,8 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                             icon: Icon(_isPaused ? Icons.play_arrow : Icons.pause),
                             label: Text(
                               _isPaused
-                                  ? (l10n?.resume ?? 'Wznów')
-                                  : (l10n?.pause ?? 'Pauza'),
+                                  ? (l10n?.resume ?? 'Resume')
+                                  : (l10n?.pause ?? 'Pause'),
                             ),
                             style: FilledButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
@@ -550,12 +558,12 @@ class _FinishWorkoutDialog extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return AlertDialog(
-      title: Text(l10n?.finishWorkout ?? 'Zakończ trening'),
+      title: Text(l10n?.finishWorkout ?? 'Finish Workout'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            l10n?.workoutDuration ?? 'Czas trwania treningu:',
+            l10n?.workoutDuration ?? 'Workout Duration:',
             style: theme.textTheme.bodyMedium,
           ),
           const SizedBox(height: 8),
@@ -582,7 +590,7 @@ class _FinishWorkoutDialog extends StatelessWidget {
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, true),
-          child: Text(l10n?.finish ?? 'Zakończ'),
+          child: Text(l10n?.finish ?? 'Finish'),
         ),
       ],
     );

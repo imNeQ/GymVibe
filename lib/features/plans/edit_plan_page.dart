@@ -6,7 +6,6 @@ import '../../core/services/mock_data.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../core/routes.dart';
 
-/// Page for editing weekly workout plan.
 class EditPlanPage extends StatefulWidget {
   const EditPlanPage({super.key});
 

@@ -1,5 +1,3 @@
-/// Model representing a single exercise in a workout.
-/// Part of the GymVibe app's core data models.
 class Exercise {
   final String name;
   final int sets;

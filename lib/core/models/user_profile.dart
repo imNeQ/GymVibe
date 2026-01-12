@@ -1,5 +1,3 @@
-/// Model representing user profile information.
-/// Part of the GymVibe app's core data models.
 class UserProfile {
   final String? name;
   final String? goal;

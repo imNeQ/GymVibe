@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Localization class for managing app translations.
-/// Provides translations for Polish and English.
 class AppLocalizations {
   final Locale locale;
 
@@ -249,12 +247,56 @@ class AppLocalizations {
   String get noExercisesMessage => _translate('noExercisesMessage', 'Brak ćwiczeń. Kliknij "Dodaj ćwiczenie" aby dodać pierwsze ćwiczenie.');
   String get restSeconds => _translate('restSeconds', 'Odpoczynek (sekundy)');
 
+  String get workout1Description => _translate('workout1Description', 'Kompleksowy trening całego ciała idealny na początek Twojej przygody z fitness');
+  String get workout2Description => _translate('workout2Description', 'Skupia się na klatce piersiowej, barkach, plecach i ramionach dla zrównoważonego rozwoju górnej części ciała');
+  String get workout3Description => _translate('workout3Description', 'Kompleksowy trening dolnej części ciała skupiający się na wszystkich głównych mięśniach nóg');
+  String get workout4Description => _translate('workout4Description', 'Wysokointensywne interwały zwiększające wydolność sercowo-naczyniową i spalające kalorie');
+  String get workout5Description => _translate('workout5Description', 'Rozwijaj stabilność i siłę core dzięki skupionym ćwiczeniom na mięśnie brzucha');
+  String get workout6Description => _translate('workout6Description', 'Trening skupiający się na klatce piersiowej, barkach i tricepsach. Idealny dla split push/pull/legs');
+  String get workout7Description => _translate('workout7Description', 'Trening skupiający się na plecach i bicepsach. Idealny dla split push/pull/legs');
+  String get workout8Description => _translate('workout8Description', 'Kompleksowy trening nóg dla split push/pull/legs. Skupia się na wszystkich mięśniach dolnej części ciała');
+  String get workout9Description => _translate('workout9Description', 'Zaawansowany trening push z większym naciskiem na objętość i intensywność');
+  String get workout10Description => _translate('workout10Description', 'Zaawansowany trening pull z większym naciskiem na szerokość i grubość pleców');
+  String get workout11Description => _translate('workout11Description', 'Trening push w stylu PPL - klatka, barki, triceps');
+  String get workout12Description => _translate('workout12Description', 'Trening pull w stylu PPL - plecy, biceps');
+
   /// Translate a key to the current locale.
   String _translate(String key, String polishText) {
     if (locale.languageCode == 'en') {
       return _getEnglishTranslation(key, polishText);
     }
     return polishText;
+  }
+
+  String? getWorkoutDescription(String workoutId) {
+    switch (workoutId) {
+      case '1':
+        return workout1Description;
+      case '2':
+        return workout2Description;
+      case '3':
+        return workout3Description;
+      case '4':
+        return workout4Description;
+      case '5':
+        return workout5Description;
+      case '6':
+        return workout6Description;
+      case '7':
+        return workout7Description;
+      case '8':
+        return workout8Description;
+      case '9':
+        return workout9Description;
+      case '10':
+        return workout10Description;
+      case '11':
+        return workout11Description;
+      case '12':
+        return workout12Description;
+      default:
+        return null;
+    }
   }
 
   /// Get plural form of "workout" in Polish.
@@ -489,6 +531,18 @@ class AppLocalizations {
       'estimatedDurationMinutes': 'minutes',
       'noExercisesMessage': 'No exercises. Click "Add Exercise" to add the first exercise.',
       'restSeconds': 'Rest (seconds)',
+      'workout1Description': 'Comprehensive full-body workout perfect for starting your fitness journey',
+      'workout2Description': 'Focuses on chest, shoulders, back, and arms for balanced upper body development',
+      'workout3Description': 'Comprehensive lower body workout focusing on all major leg muscles',
+      'workout4Description': 'High-intensity intervals boosting cardiovascular endurance and burning calories',
+      'workout5Description': 'Build core stability and strength with focused abdominal muscle exercises',
+      'workout6Description': 'Workout focusing on chest, shoulders, and triceps. Perfect for push/pull/legs split',
+      'workout7Description': 'Workout focusing on back and biceps. Perfect for push/pull/legs split',
+      'workout8Description': 'Comprehensive leg workout for push/pull/legs split. Focuses on all lower body muscles',
+      'workout9Description': 'Advanced push workout with greater emphasis on volume and intensity',
+      'workout10Description': 'Advanced pull workout with greater emphasis on back width and thickness',
+      'workout11Description': 'PPL-style push workout - chest, shoulders, triceps',
+      'workout12Description': 'PPL-style pull workout - back, biceps',
     };
 
     return translations[key] ?? polishText;

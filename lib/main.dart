@@ -7,22 +7,14 @@ import 'core/localization/app_localizations.dart';
 import 'core/services/settings_service.dart';
 import 'features/workouts/workout_detail_page.dart';
 
-/// Main entry point of the GymVibe application.
-/// Initializes the Flutter app with MaterialApp and routing configuration.
-/// 
-/// Note: App works without login/registration - users can start tracking workouts immediately.
-/// All data is stored locally using SharedPreferences and persists across app restarts.
 void main() => runApp(const MyApp());
 
-/// Root widget of the GymVibe application.
-/// Configures MaterialApp with theme, navigation, and routes.
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
   State<MyApp> createState() => MyAppState();
 
-  /// Static method to find MyAppState from context.
   static MyAppState? of(BuildContext context) {
     return context.findAncestorStateOfType<MyAppState>();
   }
@@ -67,12 +59,10 @@ class MyAppState extends State<MyApp> {
     }
   }
 
-  /// Callback to refresh language when changed in settings.
   Future<void> refreshLanguage() async {
     await _loadLanguage();
   }
 
-  /// Callback to refresh theme mode when changed in settings.
   Future<void> refreshThemeMode() async {
     await _loadThemeMode();
   }
@@ -95,10 +85,7 @@ class MyAppState extends State<MyApp> {
         Locale('pl', 'PL'),
         Locale('en', 'US'),
       ],
-      // Initial route is main navigation - no login required
-      // Users can immediately access all features and track workouts
       home: const MainNavigation(),
-      // Named routes for detail pages (that need to be full screen)
       routes: {
         AppRoutes.workoutDetail: (context) {
           final args = ModalRoute.of(context)!.settings.arguments;

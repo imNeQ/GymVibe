@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trening_tracker/core/models/exercise.dart';
+import 'package:gymvibe/core/models/exercise.dart';
 
 void main() {
   group('Exercise', () {

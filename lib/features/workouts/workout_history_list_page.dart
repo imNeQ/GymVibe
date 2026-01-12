@@ -6,7 +6,6 @@ import '../../core/models/workout.dart';
 import '../../core/localization/app_localizations.dart';
 import 'workout_history_detail_page.dart';
 
-/// Page displaying list of all completed workouts from history.
 class WorkoutHistoryListPage extends StatefulWidget {
   const WorkoutHistoryListPage({super.key});
 

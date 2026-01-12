@@ -5,8 +5,6 @@ import '../../core/models/exercise_set.dart';
 import '../../core/services/workout_history_service.dart';
 import '../../core/localization/app_localizations.dart';
 
-/// Page for adding a workout to history.
-/// Allows users to log completed workouts with date and activity type.
 class AddWorkoutHistoryPage extends StatefulWidget {
   const AddWorkoutHistoryPage({super.key});
 
@@ -173,22 +171,22 @@ class _AddWorkoutHistoryPageState extends State<AddWorkoutHistoryPage> {
               children: [
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: const Text('Siłownia'),
+                  title: Text(l10n?.gym ?? 'Gym'),
                   value: ActivityType.gym,
                 ),
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: const Text('Bieganie'),
+                  title: Text(l10n?.running ?? 'Running'),
                   value: ActivityType.running,
                 ),
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: const Text('Rower'),
+                  title: Text(l10n?.cycling ?? 'Cycling'),
                   value: ActivityType.cycling,
                 ),
                 const Divider(height: 1),
                 RadioListTile<ActivityType>(
-                  title: const Text('Pływanie'),
+                  title: Text(l10n?.swimming ?? 'Swimming'),
                   value: ActivityType.swimming,
                 ),
                 const Divider(height: 1),
@@ -730,12 +728,12 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return AlertDialog(
-      title: Text(l10n?.addExercise ?? 'Dodaj ćwiczenie'),
+      title: Text(l10n?.addExercise ?? 'Add Exercise'),
       content: TextField(
         controller: _nameController,
         decoration: InputDecoration(
-          labelText: l10n?.exerciseName ?? 'Nazwa ćwiczenia',
-          hintText: l10n?.exerciseNameHint ?? 'np. Przysiad, Wyciskanie na ławce',
+          labelText: l10n?.exerciseName ?? 'Exercise Name',
+          hintText: l10n?.exerciseNameHint ?? 'e.g. Squat, Bench Press',
           border: OutlineInputBorder(),
         ),
         autofocus: true,
@@ -743,7 +741,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Anuluj'),
+          child: Text(l10n?.cancel ?? 'Cancel'),
         ),
         FilledButton(
           onPressed: () {
@@ -753,7 +751,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
               Navigator.pop(context);
             }
           },
-          child: const Text('Dodaj'),
+          child: Text(l10n?.add ?? 'Add'),
         ),
       ],
     );
@@ -831,7 +829,7 @@ class _AddSetDialogState extends State<_AddSetDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Anuluj'),
+          child: Text(l10n?.cancel ?? 'Cancel'),
         ),
         FilledButton(
           onPressed: () {
@@ -848,11 +846,11 @@ class _AddSetDialogState extends State<_AddSetDialog> {
               Navigator.pop(context);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n?.provideReps ?? 'Podaj liczbę powtórzeń')),
+                SnackBar(content: Text(l10n?.provideReps ?? 'Enter number of repetitions')),
               );
             }
           },
-          child: const Text('Dodaj'),
+          child: Text(l10n?.add ?? 'Add'),
         ),
       ],
     );

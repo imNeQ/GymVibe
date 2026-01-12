@@ -4,8 +4,6 @@ import '../../core/models/workout.dart';
 import '../../core/services/custom_workout_service.dart';
 import '../../core/localization/app_localizations.dart';
 
-/// Page for adding a new custom workout.
-/// Part of the GymVibe app's workout management feature.
 class AddWorkoutPage extends StatefulWidget {
   const AddWorkoutPage({super.key});
 
@@ -35,7 +33,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n?.addWorkout ?? 'Dodaj trening'),
+        title: Text(l10n?.addWorkout ?? 'Add Workout'),
       ),
       body: Form(
         key: _formKey,
@@ -89,8 +87,8 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
     return TextFormField(
       controller: _descriptionController,
       decoration: InputDecoration(
-        labelText: l10n?.workoutDescription ?? 'Opis (opcjonalnie)',
-        hintText: l10n?.workoutDescription ?? 'Krótki opis treningu',
+        labelText: l10n?.workoutDescription ?? 'Workout Description',
+        hintText: l10n?.workoutDescription ?? 'Short workout description',
         border: const OutlineInputBorder(),
       ),
       maxLines: 3,
@@ -104,7 +102,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n?.filterByLevel ?? 'Poziom trudności',
+          l10n?.filterByLevel ?? 'Filter by Level',
           style: theme.textTheme.titleSmall?.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -114,15 +112,15 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
           segments: [
             ButtonSegment(
               value: 'Beginner',
-              label: Text(l10n?.beginner ?? 'Początkujący'),
+              label: Text(l10n?.beginner ?? 'Beginner'),
             ),
             ButtonSegment(
               value: 'Intermediate',
-              label: Text(l10n?.intermediate ?? 'Średnio zaawansowany'),
+              label: Text(l10n?.intermediate ?? 'Intermediate'),
             ),
             ButtonSegment(
               value: 'Advanced',
-              label: Text(l10n?.advanced ?? 'Zaawansowany'),
+              label: Text(l10n?.advanced ?? 'Advanced'),
             ),
           ],
           selected: {_selectedDifficulty},
@@ -179,7 +177,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              l10n?.exercises ?? 'Ćwiczenia',
+              l10n?.exercises ?? 'Exercises',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -256,7 +254,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
       child: FilledButton.icon(
         onPressed: _saveWorkout,
         icon: const Icon(Icons.save),
-        label: Text(l10n?.saveWorkout ?? 'Zapisz trening'),
+        label: Text(l10n?.saveWorkout ?? 'Save Workout'),
         style: FilledButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
@@ -399,7 +397,7 @@ class _AddExerciseDialogState extends State<_AddExerciseDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(l10n?.cancel ?? 'Anuluj'),
+          child: Text(l10n?.cancel ?? 'Cancel'),
         ),
         FilledButton(
           onPressed: _addExercise,

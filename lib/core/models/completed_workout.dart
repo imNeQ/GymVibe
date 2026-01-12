@@ -1,6 +1,5 @@
 import 'strength_exercise.dart';
 
-/// Enum for activity types.
 enum ActivityType {
   gym, // Siłownia
   running, // Bieganie
@@ -9,8 +8,6 @@ enum ActivityType {
   other, // Inne
 }
 
-/// Model representing a completed workout with completion date.
-/// Part of the GymVibe app's core data models.
 class CompletedWorkout {
   final String? workoutId; // Optional - can be null for custom activities
   final DateTime completedAt;
@@ -143,7 +140,6 @@ class CompletedWorkout {
     }
   }
 
-  /// Get activity type display name (static method).
   /// If AppLocalizations is provided, uses translations; otherwise falls back to Polish.
   static String getActivityTypeDisplayName(ActivityType type, {dynamic l10n}) {
     if (l10n != null) {

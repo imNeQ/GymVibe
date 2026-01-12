@@ -3,8 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/workout_plan.dart';
 import 'mock_data.dart';
 
-/// Service for managing weekly workout plan.
-/// Stores plan in local storage using SharedPreferences.
 class WeeklyPlanService {
   static const String _key = 'weekly_plan';
 

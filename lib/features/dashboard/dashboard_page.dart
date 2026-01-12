@@ -4,20 +4,16 @@ import '../../core/services/workout_history_service.dart';
 import '../../core/services/user_profile_service.dart';
 import '../../core/models/workout.dart';
 import '../../core/models/completed_workout.dart';
-import '../../core/utils/translations.dart';
 import '../../core/localization/app_localizations.dart';
 import '../workouts/workout_history_detail_page.dart';
 import '../workouts/workout_timer_page.dart';
 
-/// Dashboard page - main home screen with clear sections.
-/// Part of the GymVibe app's core navigation flow.
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
   
-  /// Create a key that can be used to access the state.
   static GlobalKey<State<DashboardPage>> createKey() {
     return GlobalKey<State<DashboardPage>>();
   }
@@ -105,7 +101,6 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 }
 
-/// Greeting section with personalized message.
 class _GreetingSection extends StatelessWidget {
   const _GreetingSection();
 
@@ -148,13 +143,13 @@ class _GreetingSection extends StatelessWidget {
   }
 }
 
-/// Today's workout card with start button.
 class _TodayWorkoutCard extends StatelessWidget {
   const _TodayWorkoutCard();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final todaysWorkoutFuture = MockDataService.getTodaysWorkout();
 
     return FutureBuilder<Workout?>(
@@ -220,14 +215,14 @@ class _TodayWorkoutCard extends StatelessWidget {
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    _buildDifficultyChip(todaysWorkout.difficulty),
+                    _buildDifficultyChip(context, todaysWorkout.difficulty),
                     _buildDurationChip(todaysWorkout.estimatedDurationMinutes),
                   ],
                 ),
-                if (todaysWorkout.description != null) ...[
+                if (todaysWorkout.description != null || (l10n?.getWorkoutDescription(todaysWorkout.id) != null)) ...[
                   const SizedBox(height: 12),
                   Text(
-                    todaysWorkout.description!,
+                    l10n?.getWorkoutDescription(todaysWorkout.id) ?? todaysWorkout.description ?? '',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
@@ -249,7 +244,7 @@ class _TodayWorkoutCard extends StatelessWidget {
                       );
                     },
                     icon: const Icon(Icons.play_arrow),
-                    label: Text(AppLocalizations.of(context)?.startWorkout ?? 'Rozpocznij trening'),
+                    label: Text(AppLocalizations.of(context)?.startWorkout ?? 'Start Workout'),
                   ),
                 ),
               ],
@@ -261,24 +256,30 @@ class _TodayWorkoutCard extends StatelessWidget {
   }
 
   /// Build difficulty chip with color coding.
-  Widget _buildDifficultyChip(String difficulty) {
+  Widget _buildDifficultyChip(BuildContext context, String difficulty) {
+    final l10n = AppLocalizations.of(context);
     Color color;
+    String difficultyText;
     switch (difficulty.toLowerCase()) {
       case 'beginner':
         color = Colors.green;
+        difficultyText = l10n?.beginner ?? 'Beginner';
         break;
       case 'intermediate':
         color = Colors.orange;
+        difficultyText = l10n?.intermediate ?? 'Intermediate';
         break;
       case 'advanced':
         color = Colors.red;
+        difficultyText = l10n?.advanced ?? 'Advanced';
         break;
       default:
         color = Colors.grey;
+        difficultyText = difficulty;
     }
 
     return Chip(
-      label: Text(Translations.translateDifficulty(difficulty)),
+      label: Text(difficultyText),
       backgroundColor: color.withValues(alpha: 0.1),
       labelStyle: TextStyle(
         color: color,
@@ -299,7 +300,6 @@ class _TodayWorkoutCard extends StatelessWidget {
   }
 }
 
-/// This week summary section showing workout progress.
 class _ThisWeekSummarySection extends StatelessWidget {
   final Future<int>? future;
 
@@ -323,36 +323,42 @@ class _ThisWeekSummarySection extends StatelessWidget {
           future: future ?? WorkoutHistoryService.getWorkoutsThisWeek(),
           builder: (context, snapshot) {
             final workoutsThisWeek = snapshot.data ?? 0;
-            final stats = MockDataService.getStatistics();
 
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildStatItem(
-                      context,
-                      '$workoutsThisWeek',
-                      AppLocalizations.of(context)?.workoutsCount ?? 'Treningi',
-                      Icons.fitness_center,
-                      theme.colorScheme.primary,
+            return FutureBuilder<int>(
+              future: WorkoutHistoryService.getWorkoutsThisMonth(),
+              builder: (context, monthSnapshot) {
+                final workoutsThisMonth = monthSnapshot.data ?? 0;
+
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _buildStatItem(
+                          context,
+                          '$workoutsThisWeek',
+                          AppLocalizations.of(context)?.workoutsCount ?? 'Treningi',
+                          Icons.fitness_center,
+                          theme.colorScheme.primary,
+                        ),
+                        Container(
+                          width: 1,
+                          height: 40,
+                          color: theme.colorScheme.outline.withValues(alpha: 0.2),
+                        ),
+                        _buildStatItem(
+                          context,
+                          '$workoutsThisMonth',
+                          AppLocalizations.of(context)?.thisMonth ?? 'Ten miesiąc',
+                          Icons.calendar_month,
+                          Colors.green,
+                        ),
+                      ],
                     ),
-                    Container(
-                      width: 1,
-                      height: 40,
-                      color: theme.colorScheme.outline.withValues(alpha: 0.2),
-                    ),
-                    _buildStatItem(
-                      context,
-                      '${stats['workoutsThisMonth']}',
-                      AppLocalizations.of(context)?.thisMonth ?? 'Ten miesiąc',
-                      Icons.calendar_month,
-                      Colors.green,
-                    ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             );
           },
         ),
@@ -393,7 +399,6 @@ class _ThisWeekSummarySection extends StatelessWidget {
   }
 }
 
-/// Suggestions section with workout recommendations.
 class _SuggestionsSection extends StatelessWidget {
   const _SuggestionsSection();
 
@@ -549,7 +554,7 @@ class _SuggestionsSection extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
-                _buildDifficultyChip(workout.difficulty),
+                _buildDifficultyChipSmall(context, workout.difficulty),
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -576,24 +581,30 @@ class _SuggestionsSection extends StatelessWidget {
   }
 
   /// Build difficulty chip.
-  Widget _buildDifficultyChip(String difficulty) {
+  Widget _buildDifficultyChipSmall(BuildContext context, String difficulty) {
+    final l10n = AppLocalizations.of(context);
     Color color;
+    String difficultyText;
     switch (difficulty.toLowerCase()) {
       case 'beginner':
         color = Colors.green;
+        difficultyText = l10n?.beginner ?? 'Beginner';
         break;
       case 'intermediate':
         color = Colors.orange;
+        difficultyText = l10n?.intermediate ?? 'Intermediate';
         break;
       case 'advanced':
         color = Colors.red;
+        difficultyText = l10n?.advanced ?? 'Advanced';
         break;
       default:
         color = Colors.grey;
+        difficultyText = difficulty;
     }
 
     return Chip(
-      label: Text(Translations.translateDifficulty(difficulty)),
+      label: Text(difficultyText),
       backgroundColor: color.withValues(alpha: 0.1),
       labelStyle: TextStyle(
         color: color,
@@ -605,7 +616,6 @@ class _SuggestionsSection extends StatelessWidget {
   }
 }
 
-/// Cardio stats section showing distance and time from last 7 days.
 class _CardioStatsSection extends StatelessWidget {
   final Future<Map<String, dynamic>>? future;
 
@@ -716,7 +726,6 @@ class _CardioStatsSection extends StatelessWidget {
   }
 }
 
-/// Stats overview section showing total time and workouts.
 class _StatsOverviewSection extends StatelessWidget {
   final Future<Map<String, int>>? future;
 
@@ -725,12 +734,13 @@ class _StatsOverviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Statystyki',
+          l10n?.statisticsTitle ?? 'Statistics',
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -766,7 +776,7 @@ class _StatsOverviewSection extends StatelessWidget {
                     _buildStatItem(
                       context,
                       '$totalWorkouts',
-                      AppLocalizations.of(context)?.allWorkouts ?? 'Wszystkie treningi',
+                      AppLocalizations.of(context)?.allWorkouts ?? 'All Workouts',
                       Icons.fitness_center,
                       Colors.orange,
                     ),
@@ -814,7 +824,6 @@ class _StatsOverviewSection extends StatelessWidget {
   }
 }
 
-/// Recent workouts section showing last completed workouts.
 class _RecentWorkoutsSection extends StatelessWidget {
   final Future<List<CompletedWorkout>>? future;
 

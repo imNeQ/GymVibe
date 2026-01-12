@@ -1,7 +1,5 @@
 import 'exercise.dart';
 
-/// Model representing a workout with multiple exercises.
-/// Part of the GymVibe app's core data models.
 class Workout {
   final String id;
   final String name;

@@ -1,4 +1,4 @@
-package com.example.trening_tracker
+package com.example.gymvibe
 
 import io.flutter.embedding.android.FlutterActivity
 

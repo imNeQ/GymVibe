@@ -3,8 +3,6 @@ import '../../core/services/settings_service.dart';
 import '../../core/localization/app_localizations.dart';
 import '../../main.dart';
 
-/// Settings page - allows users to configure app preferences.
-/// Part of the GymVibe app's settings feature.
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Reusable custom button widget.
-/// Part of the GymVibe app's reusable UI components.
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;

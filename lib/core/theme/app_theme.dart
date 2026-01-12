@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// App theme configuration using Material 3 design.
-/// Minimalistic, modern, mobile-first theme for GymVibe app.
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(

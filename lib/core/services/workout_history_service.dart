@@ -3,8 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/completed_workout.dart';
 import 'mock_data.dart';
 
-/// Service for managing workout history and completed workouts.
-/// Stores completed workouts in local storage using SharedPreferences.
 class WorkoutHistoryService {
   static const String _key = 'completed_workouts';
 
@@ -71,7 +69,6 @@ class WorkoutHistoryService {
     await prefs.setString(_key, jsonEncode(jsonList));
   }
 
-  /// Get all completed workouts.
   static Future<List<CompletedWorkout>> getCompletedWorkouts() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonString = prefs.getString(_key);
@@ -105,9 +102,22 @@ class WorkoutHistoryService {
 
     return completedWorkouts.where((workout) {
       final completedDate = workout.completedAt;
-      // Check if workout was completed within the current week
-      return completedDate.isAfter(startOfWeek.subtract(const Duration(milliseconds: 1))) &&
-          completedDate.isBefore(endOfWeek.add(const Duration(milliseconds: 1)));
+      // Check if workout was completed within the current week (inclusive of both boundaries)
+      return completedDate.compareTo(startOfWeek) >= 0 && completedDate.compareTo(endOfWeek) <= 0;
+    }).length;
+  }
+
+  /// Get number of workouts completed this month.
+  static Future<int> getWorkoutsThisMonth() async {
+    final completedWorkouts = await getCompletedWorkouts();
+    final now = DateTime.now();
+    final firstDayOfMonth = DateTime(now.year, now.month, 1);
+    final firstDayOfNextMonth = DateTime(now.year, now.month + 1, 1);
+
+    return completedWorkouts.where((workout) {
+      final workoutDate = workout.completedAt;
+     
+      return workoutDate.compareTo(firstDayOfMonth) >= 0 && workoutDate.compareTo(firstDayOfNextMonth) < 0;
     }).length;
   }
 
@@ -151,7 +161,6 @@ class WorkoutHistoryService {
     return completedWorkouts.length;
   }
 
-  /// Get all unique exercise names from strength workouts.
   static Future<List<String>> getAllExerciseNames() async {
     final completedWorkouts = await getCompletedWorkouts();
     final Set<String> exerciseNames = {};
@@ -281,4 +290,5 @@ class WorkoutHistoryService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_key);
   }
+
 }

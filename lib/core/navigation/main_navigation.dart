@@ -7,9 +7,6 @@ import '../../features/profile/profile_page.dart';
 import '../../features/workouts/add_workout_history_page.dart';
 import '../../core/localization/app_localizations.dart';
 
-/// Main navigation wrapper with bottom navigation bar.
-/// Manages tab navigation and preserves state for each tab using IndexedStack.
-/// Part of the GymVibe app's core navigation system.
 class MainNavigation extends StatefulWidget {
   final int initialIndex;
 
@@ -22,7 +19,6 @@ class MainNavigation extends StatefulWidget {
   State<MainNavigation> createState() => MainNavigationState();
 }
 
-/// State class for MainNavigation (exposed for programmatic navigation).
 class MainNavigationState extends State<MainNavigation> {
   late int _currentIndex;
   final GlobalKey<State<DashboardPage>> _dashboardKey = GlobalKey<State<DashboardPage>>();
@@ -43,13 +39,13 @@ class MainNavigationState extends State<MainNavigation> {
       case 0:
         return 'GymVibe';
       case 1:
-        return l10n?.workouts ?? 'Treningi';
+        return l10n?.workouts ?? 'Workouts';
       case 2:
         return l10n?.plan ?? 'Plan';
       case 3:
-        return l10n?.statistics ?? 'Statystyki';
+        return l10n?.statistics ?? 'Statistics';
       case 4:
-        return l10n?.profile ?? 'Profil';
+        return l10n?.profile ?? 'Profile';
       default:
         return 'GymVibe';
     }
@@ -61,7 +57,6 @@ class MainNavigationState extends State<MainNavigation> {
     _currentIndex = widget.initialIndex;
   }
 
-  /// Set current navigation index (used for programmatic navigation).
   void setCurrentIndex(int index) {
     if (index >= 0 && index < _pages.length) {
       setState(() {
@@ -110,7 +105,7 @@ class MainNavigationState extends State<MainNavigation> {
                 });
               },
               icon: const Icon(Icons.add),
-              label: Text(AppLocalizations.of(context)?.addWorkout ?? 'Dodaj trening'),
+              label: Text(AppLocalizations.of(context)?.addWorkout ?? 'Add Workout'),
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -168,12 +163,12 @@ class MainNavigationState extends State<MainNavigation> {
               NavigationDestination(
                 icon: const Icon(Icons.home_outlined),
                 selectedIcon: const Icon(Icons.home),
-                label: l10n?.home ?? 'Strona główna',
+                label: l10n?.home ?? 'Home',
               ),
               NavigationDestination(
                 icon: const Icon(Icons.fitness_center_outlined),
                 selectedIcon: const Icon(Icons.fitness_center),
-                label: l10n?.workouts ?? 'Treningi',
+                label: l10n?.workouts ?? 'Workouts',
               ),
               NavigationDestination(
                 icon: const Icon(Icons.calendar_today_outlined),
@@ -183,7 +178,7 @@ class MainNavigationState extends State<MainNavigation> {
               NavigationDestination(
                 icon: const Icon(Icons.bar_chart_outlined),
                 selectedIcon: const Icon(Icons.bar_chart),
-                label: l10n?.statistics ?? 'Statystyki',
+                label: l10n?.statistics ?? 'Statistics',
               ),
               NavigationDestination(
                 icon: const Icon(Icons.person_outline),

@@ -4,12 +4,9 @@ import '../../core/services/weekly_plan_service.dart';
 import '../../core/models/workout.dart';
 import '../../core/models/workout_plan.dart';
 import '../../core/routes.dart';
-import '../../core/utils/translations.dart';
 import '../../core/localization/app_localizations.dart';
 import 'edit_plan_page.dart';
 
-/// Weekly plan page - displays Monday-Sunday workout schedule.
-/// Part of the GymVibe app's planning feature.
 class PlanPage extends StatefulWidget {
   const PlanPage({super.key});
 
@@ -87,7 +84,7 @@ class _PlanPageState extends State<PlanPage> {
                     }
                   },
                   icon: const Icon(Icons.edit, size: 18),
-                  label: Text(AppLocalizations.of(context)?.edit ?? 'Edytuj'),
+                  label: Text(AppLocalizations.of(context)?.edit ?? 'Edit'),
                 ),
               ],
             ),
@@ -205,7 +202,7 @@ class _PlanPageState extends State<PlanPage> {
                     const SizedBox(height: 4),
                     if (isRestDay)
                       Text(
-                        AppLocalizations.of(context)?.restDay ?? 'Dzień odpoczynku',
+                        AppLocalizations.of(context)?.restDay ?? 'Rest Day',
                         style: theme.textTheme.bodySmall?.copyWith(
                           fontStyle: FontStyle.italic,
                           color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
@@ -230,7 +227,7 @@ class _PlanPageState extends State<PlanPage> {
                               Wrap(
                                 spacing: 8,
                                 children: [
-                                  _buildDifficultyChip(workout.difficulty),
+                                  _buildDifficultyChip(context, workout.difficulty),
                                   _buildDurationChip(workout.estimatedDurationMinutes, theme),
                                 ],
                               ),
@@ -278,10 +275,26 @@ class _PlanPageState extends State<PlanPage> {
   }
 
   /// Build difficulty chip.
-  Widget _buildDifficultyChip(String difficulty) {
+  Widget _buildDifficultyChip(BuildContext context, String difficulty) {
+    final l10n = AppLocalizations.of(context);
     final color = _getDifficultyColor(difficulty);
+    String difficultyText;
+    switch (difficulty.toLowerCase()) {
+      case 'beginner':
+        difficultyText = l10n?.beginner ?? 'Beginner';
+        break;
+      case 'intermediate':
+        difficultyText = l10n?.intermediate ?? 'Intermediate';
+        break;
+      case 'advanced':
+        difficultyText = l10n?.advanced ?? 'Advanced';
+        break;
+      default:
+        difficultyText = difficulty;
+    }
+    
     return Chip(
-      label: Text(Translations.translateDifficulty(difficulty)),
+      label: Text(difficultyText),
       backgroundColor: color.withValues(alpha: 0.1),
       labelStyle: TextStyle(
         color: color,

@@ -1,10 +1,7 @@
 import '../models/achievement.dart';
 import '../services/workout_history_service.dart';
 
-/// Service for managing user achievements.
-/// Calculates achievements based on workout history.
 class AchievementService {
-  /// Get all available achievements with their unlock status.
   static Future<List<Achievement>> getAchievements() async {
     final workouts = await WorkoutHistoryService.getCompletedWorkouts();
     final totalWorkouts = workouts.length;

@@ -13,8 +13,6 @@ import '../../core/services/mock_data.dart';
 import 'edit_profile_page.dart';
 import 'exercise_search_page.dart';
 
-/// Profile page - displays user information and profile actions.
-/// Part of the GymVibe app's user management feature.
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 

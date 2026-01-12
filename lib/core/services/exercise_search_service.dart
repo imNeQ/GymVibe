@@ -1,8 +1,6 @@
 import '../models/exercise_info.dart';
 
-/// Service providing exercise database for search functionality.
 class ExerciseSearchService {
-  /// Get all available exercises.
   static List<ExerciseInfo> getAllExercises() {
     return [
       // Klatka piersiowa

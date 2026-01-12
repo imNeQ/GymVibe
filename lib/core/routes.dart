@@ -6,8 +6,6 @@ import '../features/plans/plan_page.dart';
 import '../features/statistics/statistics_page.dart';
 import '../features/profile/profile_page.dart';
 
-/// App routing configuration using Navigator 1.0 with named routes.
-/// Defines all route paths and route builders for the GymVibe app.
 class AppRoutes {
   static const String dashboard = '/';
   static const String workouts = '/workouts';
@@ -16,7 +14,6 @@ class AppRoutes {
   static const String statistics = '/statistics';
   static const String profile = '/profile';
 
-  /// Generate routes map for MaterialApp.
   static Map<String, WidgetBuilder> getRoutes() {
     return {
       dashboard: (context) => const DashboardPage(),
@@ -27,7 +24,6 @@ class AppRoutes {
     };
   }
 
-  /// Generate route for workout detail page with arguments.
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     if (settings.name == workoutDetail) {
       final args = settings.arguments;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/services/workout_history_service.dart';
 import '../../core/localization/app_localizations.dart';
 
-/// Page for selecting an exercise to view progress.
 class ExerciseProgressPage extends StatefulWidget {
   const ExerciseProgressPage({super.key});
 
@@ -108,7 +107,6 @@ class _ExerciseProgressPageState extends State<ExerciseProgressPage> {
   }
 }
 
-/// Page showing progress history for a specific exercise.
 class ExerciseProgressDetailPage extends StatefulWidget {
   final String exerciseName;
 

@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_profile.dart';
 
-/// Service for managing user profile data.
-/// Stores user profile in local storage using SharedPreferences.
 class UserProfileService {
   static const String _key = 'user_profile';
 

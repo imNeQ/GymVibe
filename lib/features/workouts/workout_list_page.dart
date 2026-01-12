@@ -3,12 +3,9 @@ import '../../core/routes.dart';
 import '../../core/services/mock_data.dart';
 import '../../core/services/custom_workout_service.dart';
 import '../../core/models/workout.dart';
-import '../../core/utils/translations.dart';
 import '../../core/localization/app_localizations.dart';
 import 'add_workout_page.dart';
 
-/// Workout list page - displays all available workouts with filtering options.
-/// Part of the GymVibe app's workout management feature.
 class WorkoutListPage extends StatefulWidget {
   const WorkoutListPage({super.key});
 
@@ -57,7 +54,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
           }
         },
         icon: const Icon(Icons.add),
-        label: Text(l10n?.addWorkout ?? 'Dodaj trening'),
+        label: Text(l10n?.addWorkout ?? 'Add Workout'),
       ),
       body: SafeArea(
         child: Column(
@@ -72,8 +69,9 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                 }
 
                 if (snapshot.hasError) {
+                  final l10n = AppLocalizations.of(context);
                   return Center(
-                    child: Text('Błąd: ${snapshot.error}'),
+                    child: Text('${l10n?.error ?? 'Error'}: ${snapshot.error}'),
                   );
                 }
 
@@ -84,18 +82,19 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
 
                 if (filteredWorkouts.isEmpty) {
                   final theme = Theme.of(context);
+                  final l10n = AppLocalizations.of(context);
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Brak treningów',
+                          l10n?.noWorkoutsInHistory ?? 'No workouts',
                           style: theme.textTheme.titleMedium,
                         ),
                         if (_selectedDifficulty != null) ...[
                           const SizedBox(height: 8),
                           Text(
-                            'Dla poziomu: $_selectedDifficulty',
+                            '${l10n?.filterByLevel ?? 'For level'}: $_selectedDifficulty',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                             ),
@@ -103,7 +102,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                         ],
                         const SizedBox(height: 8),
                         Text(
-                          'Łącznie treningów: ${allWorkouts.length}',
+                          '${l10n?.allWorkoutsCount ?? 'Total workouts'}: ${allWorkouts.length}',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                           ),
@@ -132,6 +131,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
   /// Build filter section with difficulty chips.
   Widget _buildFilterSection(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -139,7 +139,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Filtruj według poziomu',
+            l10n?.filterByLevel ?? 'Filter by Level',
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
             ),
@@ -148,10 +148,10 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
           Wrap(
             spacing: 8,
             children: [
-              _buildFilterChip('Wszystkie', null),
-              _buildFilterChip('Początkujący', 'Beginner'),
-              _buildFilterChip('Średnio zaawansowany', 'Intermediate'),
-              _buildFilterChip('Zaawansowany', 'Advanced'),
+              _buildFilterChip(l10n?.all ?? 'All', null),
+              _buildFilterChip(l10n?.beginner ?? 'Beginner', 'Beginner'),
+              _buildFilterChip(l10n?.intermediate ?? 'Intermediate', 'Intermediate'),
+              _buildFilterChip(l10n?.advanced ?? 'Advanced', 'Advanced'),
             ],
           ),
         ],
@@ -222,21 +222,31 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _buildDifficultyChip(workout.difficulty, difficultyColor),
+                  _buildDifficultyChip(context, workout.difficulty, difficultyColor),
                   _buildDurationChip(workout.estimatedDurationMinutes, theme),
                 ],
               ),
-              if (workout.description != null) ...[
-                const SizedBox(height: 12),
-                Text(
-                  workout.description!,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+              Builder(
+                builder: (context) {
+                  final l10n = AppLocalizations.of(context);
+                  final description = l10n?.getWorkoutDescription(workout.id) ?? workout.description;
+                  if (description == null) return const SizedBox.shrink();
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 12),
+                      Text(
+                        description,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -259,9 +269,25 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
   }
 
   /// Build difficulty chip.
-  Widget _buildDifficultyChip(String difficulty, Color color) {
+  Widget _buildDifficultyChip(BuildContext context, String difficulty, Color color) {
+    final l10n = AppLocalizations.of(context);
+    String difficultyText;
+    switch (difficulty.toLowerCase()) {
+      case 'beginner':
+        difficultyText = l10n?.beginner ?? 'Beginner';
+        break;
+      case 'intermediate':
+        difficultyText = l10n?.intermediate ?? 'Intermediate';
+        break;
+      case 'advanced':
+        difficultyText = l10n?.advanced ?? 'Advanced';
+        break;
+      default:
+        difficultyText = difficulty;
+    }
+    
     return Chip(
-      label: Text(Translations.translateDifficulty(difficulty)),
+      label: Text(difficultyText),
       backgroundColor: color.withValues(alpha: 0.1),
       labelStyle: TextStyle(
         color: color,
@@ -300,19 +326,19 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n?.deleteWorkout ?? 'Usuń trening'),
-        content: Text(l10n?.deleteConfirmation ?? 'Czy na pewno chcesz usunąć ten trening? Tej operacji nie można cofnąć.'),
+        title: Text(l10n?.deleteWorkout ?? 'Delete Workout'),
+        content: Text(l10n?.deleteConfirmation ?? 'Are you sure you want to delete this workout? This action cannot be undone.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n?.cancel ?? 'Anuluj'),
+            child: Text(l10n?.cancel ?? 'Cancel'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
             style: FilledButton.styleFrom(
               backgroundColor: Colors.red,
             ),
-            child: Text(l10n?.delete ?? 'Usuń'),
+            child: Text(l10n?.delete ?? 'Delete'),
           ),
         ],
       ),
@@ -335,7 +361,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
         if (!mounted) return;
         messenger.showSnackBar(
           SnackBar(
-            content: Text(l10n?.workoutDeleted ?? 'Trening został usunięty'),
+            content: Text(l10n?.workoutDeleted ?? 'Workout has been deleted'),
             duration: const Duration(seconds: 2),
           ),
         );
@@ -345,7 +371,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
         if (!mounted) return;
         messenger.showSnackBar(
           SnackBar(
-            content: Text(l10n?.deleteFailed ?? 'Nie udało się usunąć treningu'),
+            content: Text(l10n?.deleteFailed ?? 'Failed to delete workout'),
             duration: const Duration(seconds: 2),
           ),
         );

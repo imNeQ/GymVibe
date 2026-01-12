@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:trening_tracker/core/models/completed_workout.dart';
-import 'package:trening_tracker/core/models/strength_exercise.dart';
-import 'package:trening_tracker/core/models/exercise_set.dart';
+import 'package:gymvibe/core/models/completed_workout.dart';
+import 'package:gymvibe/core/models/strength_exercise.dart';
+import 'package:gymvibe/core/models/exercise_set.dart';
 
 void main() {
   group('CompletedWorkout', () {
