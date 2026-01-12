@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/models/completed_workout.dart';
 import '../../core/models/strength_exercise.dart';
+import '../../core/models/workout.dart';
 import '../../core/services/mock_data.dart';
 import '../../core/services/workout_history_service.dart';
 import '../../core/localization/app_localizations.dart';
@@ -99,9 +100,9 @@ class _WorkoutHistoryDetailPageState extends State<WorkoutHistoryDetailPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final workout = _completedWorkout.workoutId != null
+    final workoutFuture = _completedWorkout.workoutId != null
         ? MockDataService.getWorkoutById(_completedWorkout.workoutId!)
-        : null;
+        : Future<Workout?>.value(null);
 
     final date = _completedWorkout.completedAt;
     final dateText = '${date.day}.${date.month}.${date.year}';
@@ -142,7 +143,13 @@ class _WorkoutHistoryDetailPageState extends State<WorkoutHistoryDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeaderCard(context, theme, workout, dateText),
+              FutureBuilder<Workout?>(
+                future: workoutFuture,
+                builder: (context, snapshot) {
+                  final workout = snapshot.data;
+                  return _buildHeaderCard(context, theme, workout, dateText);
+                },
+              ),
               if (_completedWorkout.strengthExercises != null &&
                   _completedWorkout.strengthExercises!.isNotEmpty) ...[
                 const SizedBox(height: 24),
@@ -161,7 +168,7 @@ class _WorkoutHistoryDetailPageState extends State<WorkoutHistoryDetailPage> {
   Widget _buildHeaderCard(
     BuildContext context,
     ThemeData theme,
-    dynamic workout,
+    Workout? workout,
     String dateText,
   ) {
     final l10n = AppLocalizations.of(context);
@@ -189,36 +196,43 @@ class _WorkoutHistoryDetailPageState extends State<WorkoutHistoryDetailPage> {
                   color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
                 const SizedBox(width: 4),
-                Text(
-                  dateText,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                Flexible(
+                  child: Text(
+                    dateText,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: _getActivityColor(_completedWorkout.activityType, theme).withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        _getActivityIcon(_completedWorkout.activityType),
-                        size: 14,
-                        color: _getActivityColor(_completedWorkout.activityType, theme),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        CompletedWorkout.getActivityTypeDisplayName(_completedWorkout.activityType, l10n: l10n),
-                        style: theme.textTheme.bodySmall?.copyWith(
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _getActivityColor(_completedWorkout.activityType, theme).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          _getActivityIcon(_completedWorkout.activityType),
+                          size: 14,
                           color: _getActivityColor(_completedWorkout.activityType, theme),
-                          fontWeight: FontWeight.w600,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 4),
+                        Flexible(
+                          child: Text(
+                            CompletedWorkout.getActivityTypeDisplayName(_completedWorkout.activityType, l10n: l10n),
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: _getActivityColor(_completedWorkout.activityType, theme),
+                              fontWeight: FontWeight.w600,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
