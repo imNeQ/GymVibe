@@ -81,11 +81,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
     final today = DateTime(now.year, now.month, now.day);
     final Map<String, int> weeklyData = {};
     
-    // Get last 7 days (including today)
+    final List<String> orderedDates = [];
     for (int i = 6; i >= 0; i--) {
       final date = today.subtract(Duration(days: i));
       final dateKey = '${date.day}.${date.month}';
       weeklyData[dateKey] = 0;
+      orderedDates.add(dateKey);
     }
     
     // Count workouts per day (compare dates only, ignore time)
@@ -97,13 +98,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
       // Include workouts from last 7 days (0-6 days ago, including today)
       if (daysDiff >= 0 && daysDiff < 7) {
         final dateKey = '${workoutDate.day}.${workoutDate.month}';
-        weeklyData[dateKey] = (weeklyData[dateKey] ?? 0) + 1;
+        if (weeklyData.containsKey(dateKey)) {
+          weeklyData[dateKey] = weeklyData[dateKey]! + 1;
+        }
       }
     }
     
-    return weeklyData.entries.map((e) => {
-      'date': e.key,
-      'count': e.value,
+    // Return in order of dates (oldest to newest)
+    return orderedDates.map((dateKey) => {
+      'date': dateKey,
+      'count': weeklyData[dateKey] ?? 0,
     }).toList();
   }
 

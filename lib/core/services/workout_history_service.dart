@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/completed_workout.dart';
+import '../models/strength_exercise.dart';
+import '../models/exercise_set.dart';
 import 'mock_data.dart';
 
 class WorkoutHistoryService {
@@ -74,7 +76,8 @@ class WorkoutHistoryService {
     final jsonString = prefs.getString(_key);
 
     if (jsonString == null || jsonString.isEmpty) {
-      return [];
+      // LOCAL TEST DATA - tylko dla lokalnego testowania screenów
+      return _getTestData();
     }
 
     try {
@@ -85,6 +88,219 @@ class WorkoutHistoryService {
     } catch (e) {
       return [];
     }
+  }
+
+  // LOCAL TEST DATA - tylko dla lokalnego testowania screenów, nie commitować
+  static List<CompletedWorkout> _getTestData() {
+    final now = DateTime.now();
+    // Oblicz początek tygodnia (poniedziałek)
+    final daysFromMonday = now.weekday - 1;
+    final startOfWeek = DateTime(now.year, now.month, now.day)
+        .subtract(Duration(days: daysFromMonday));
+    
+    return [
+      // Treningi z tego tygodnia (zaczynając od poniedziałku)
+      CompletedWorkout(
+        workoutId: '1',
+        completedAt: startOfWeek.add(const Duration(days: 0, hours: 18)), // Poniedziałek
+        activityType: ActivityType.gym,
+        durationMinutes: 35,
+        strengthExercises: [
+          StrengthExercise(
+            name: 'Bodyweight Squats',
+            sets: [
+              ExerciseSet(weight: null, reps: 12),
+              ExerciseSet(weight: null, reps: 12),
+              ExerciseSet(weight: null, reps: 12),
+            ],
+          ),
+          StrengthExercise(
+            name: 'Push-ups',
+            sets: [
+              ExerciseSet(weight: null, reps: 8),
+              ExerciseSet(weight: null, reps: 8),
+              ExerciseSet(weight: null, reps: 8),
+            ],
+          ),
+        ],
+      ),
+      CompletedWorkout(
+        customName: 'Bieg poranny',
+        completedAt: startOfWeek.add(const Duration(days: 1, hours: 7)), // Wtorek
+        activityType: ActivityType.running,
+        durationSeconds: 1500, // 25 minut
+        distance: 4.8,
+        pace: CompletedWorkout.calculatePace(4.8, 1500),
+      ),
+      CompletedWorkout(
+        workoutId: '2',
+        completedAt: startOfWeek.add(const Duration(days: 2, hours: 14)), // Środa
+        activityType: ActivityType.gym,
+        durationMinutes: 45,
+        strengthExercises: [
+          StrengthExercise(
+            name: 'Bench Press',
+            sets: [
+              ExerciseSet(weight: 60.0, reps: 8),
+              ExerciseSet(weight: 65.0, reps: 6),
+              ExerciseSet(weight: 70.0, reps: 5),
+            ],
+          ),
+          StrengthExercise(
+            name: 'Overhead Press',
+            sets: [
+              ExerciseSet(weight: 40.0, reps: 8),
+              ExerciseSet(weight: 42.5, reps: 6),
+              ExerciseSet(weight: 45.0, reps: 5),
+            ],
+          ),
+        ],
+      ),
+      CompletedWorkout(
+        workoutId: '4',
+        completedAt: startOfWeek.add(const Duration(days: 3, hours: 10)), // Czwartek
+        activityType: ActivityType.gym,
+        durationMinutes: 30,
+      ),
+      CompletedWorkout(
+        workoutId: '5',
+        completedAt: startOfWeek.add(const Duration(days: 4, hours: 16)), // Piątek
+        activityType: ActivityType.gym,
+        durationMinutes: 25,
+      ),
+      CompletedWorkout(
+        customName: 'Bieg w parku',
+        completedAt: startOfWeek.add(const Duration(days: 5, hours: 8)), // Sobota
+        activityType: ActivityType.running,
+        durationSeconds: 1800, // 30 minut
+        distance: 5.2,
+        pace: CompletedWorkout.calculatePace(5.2, 1800),
+      ),
+      CompletedWorkout(
+        workoutId: '1',
+        completedAt: startOfWeek.add(const Duration(days: 6, hours: 10)), // Niedziela (dzisiaj jeśli dzisiaj jest niedziela)
+        activityType: ActivityType.gym,
+        durationMinutes: 20,
+      ),
+      // Treningi z tego miesiąca (ale poza tym tygodniem)
+      CompletedWorkout(
+        workoutId: '6',
+        completedAt: now.subtract(const Duration(days: 8)),
+        activityType: ActivityType.gym,
+        durationMinutes: 50,
+        strengthExercises: [
+          StrengthExercise(
+            name: 'Bench Press',
+            sets: [
+              ExerciseSet(weight: 65.0, reps: 8),
+              ExerciseSet(weight: 70.0, reps: 6),
+              ExerciseSet(weight: 75.0, reps: 4),
+            ],
+          ),
+        ],
+      ),
+      CompletedWorkout(
+        workoutId: '3',
+        completedAt: now.subtract(const Duration(days: 10)),
+        activityType: ActivityType.gym,
+        durationMinutes: 40,
+        strengthExercises: [
+          StrengthExercise(
+            name: 'Barbell Squats',
+            sets: [
+              ExerciseSet(weight: 80.0, reps: 8),
+              ExerciseSet(weight: 85.0, reps: 6),
+              ExerciseSet(weight: 90.0, reps: 5),
+            ],
+          ),
+        ],
+      ),
+      CompletedWorkout(
+        workoutId: '1',
+        completedAt: now.subtract(const Duration(days: 12)),
+        activityType: ActivityType.gym,
+        durationMinutes: 30,
+      ),
+      CompletedWorkout(
+        customName: 'Jazda rowerem',
+        completedAt: now.subtract(const Duration(days: 14)),
+        activityType: ActivityType.cycling,
+        durationSeconds: 2400, // 40 minut
+        distance: 15.5,
+        pace: CompletedWorkout.calculatePace(15.5, 2400),
+      ),
+      CompletedWorkout(
+        workoutId: '4',
+        completedAt: now.subtract(const Duration(days: 16)),
+        activityType: ActivityType.gym,
+        durationMinutes: 25,
+      ),
+      CompletedWorkout(
+        workoutId: '5',
+        completedAt: now.subtract(const Duration(days: 18)),
+        activityType: ActivityType.gym,
+        durationMinutes: 20,
+      ),
+      CompletedWorkout(
+        workoutId: '7',
+        completedAt: now.subtract(const Duration(days: 20)),
+        activityType: ActivityType.gym,
+        durationMinutes: 50,
+        strengthExercises: [
+          StrengthExercise(
+            name: 'Deadlifts',
+            sets: [
+              ExerciseSet(weight: 100.0, reps: 5),
+              ExerciseSet(weight: 110.0, reps: 5),
+              ExerciseSet(weight: 120.0, reps: 3),
+            ],
+          ),
+          StrengthExercise(
+            name: 'Pull-ups',
+            sets: [
+              ExerciseSet(weight: null, reps: 8),
+              ExerciseSet(weight: null, reps: 8),
+              ExerciseSet(weight: null, reps: 6),
+            ],
+          ),
+        ],
+      ),
+      CompletedWorkout(
+        workoutId: '2',
+        completedAt: now.subtract(const Duration(days: 22)),
+        activityType: ActivityType.gym,
+        durationMinutes: 45,
+      ),
+      CompletedWorkout(
+        workoutId: '8',
+        completedAt: now.subtract(const Duration(days: 24)),
+        activityType: ActivityType.gym,
+        durationMinutes: 55,
+        strengthExercises: [
+          StrengthExercise(
+            name: 'Barbell Squats',
+            sets: [
+              ExerciseSet(weight: 90.0, reps: 8),
+              ExerciseSet(weight: 95.0, reps: 6),
+              ExerciseSet(weight: 100.0, reps: 5),
+            ],
+          ),
+        ],
+      ),
+      CompletedWorkout(
+        customName: 'Pływanie',
+        completedAt: now.subtract(const Duration(days: 26)),
+        activityType: ActivityType.swimming,
+        durationSeconds: 2700, // 45 minut
+        distance: 1.5,
+      ),
+      CompletedWorkout(
+        workoutId: '1',
+        completedAt: now.subtract(const Duration(days: 28)),
+        activityType: ActivityType.gym,
+        durationMinutes: 30,
+      ),
+    ];
   }
 
   /// Get number of workouts completed this week (Monday to Sunday).
